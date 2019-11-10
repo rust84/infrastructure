@@ -9,7 +9,7 @@ provider "vsphere" {
 
 resource "vsphere_virtual_machine" "vm" {
   count            = "1"
-  name             = "terraform-test"
+  name             = "${var.virtual_machine_name_prefix}${count.index}"
   resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
@@ -31,13 +31,22 @@ resource "vsphere_virtual_machine" "vm" {
   }
 
   clone {
-   template_uuid = "${data.vsphere_virtual_machine.template.id}"
+    template_uuid = "${data.vsphere_virtual_machine.template.id}"
 
-   customize {
-     linux_options {
-       host_name = "${var.virtual_machine_name_prefix}${count.index}"
-       domain    = "${var.virtual_machine_domain}"
-     }
+    customize {
+      linux_options {
+        host_name = "${var.virtual_machine_name_prefix}${count.index}"
+        domain    = "${var.virtual_machine_domain}"
+    }
+
+    network_interface {
+      ipv4_address = "${cidrhost(var.virtual_machine_network_address, var.virtual_machine_ip_address_start + count.index)}"
+      ipv4_netmask = "${element(split("/", var.virtual_machine_network_address), 1)}"
+    }
+
+    ipv4_gateway    = "${var.virtual_machine_gateway}"
+    dns_suffix_list = ["${var.virtual_machine_domain}"]
+    dns_server_list = ["192.168.1.56", "1.1.1.1"]
    }
- }
+  }
 }
