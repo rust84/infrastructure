@@ -11,7 +11,7 @@ variable "vsphere_server" {
 }
 
 variable "template_name" {
-  default = "Ubuntu1810Template"
+  default = "Ubuntu1904Template"
 }
 
 variable "virtual_machine_name_prefix" {
@@ -36,7 +36,7 @@ variable "virtual_machine_gateway" {
   type = "string"
 }
 
-// The DNS servers for the network the virtual machines reside in.
+// Currently there seems to be a bug with reading the DNS servers var
 //variable "virtual_machine_dns_servers" {
 //  type = list(string)
 //}

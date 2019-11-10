@@ -2,3 +2,5 @@
 .terraform
 *.tfstate
 *.backup
+variables.json
+packer_cache/
