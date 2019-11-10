@@ -81,6 +81,19 @@
         }
     }
 ],
+"post-processors": [
+    [
+      {
+        "type": "vsphere-template",
+        "only": [ "vmware-iso" ],
+        "insecure": true,
+        "datacenter": "HomeLab",
+        "host": "vcenter67.our.house",
+        "username": "{{ user `vsphere_user` }}",
+        "password": "{{ user `vsphere_password` }}"
+      }
+    ]
+  ],
 "variables": {
     "box_basename": "ubuntu-19.04",
     "build_directory": "../../builds",
