@@ -8,13 +8,13 @@ provider "vsphere" {
 }
 
 resource "vsphere_virtual_machine" "vm" {
-  count            = "1"
-  name             = "${var.virtual_machine_name_prefix}${count.index}"
+  count            = "3"
+  name             = "${var.virtual_machine_name_prefix}${count.index+1}"
   resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
-  num_cpus = 1
-  memory   = 1024
+  num_cpus = 2
+  memory   = 2048
   guest_id = "${data.vsphere_virtual_machine.template.guest_id}"
 
   network_interface {
@@ -47,7 +47,7 @@ resource "vsphere_virtual_machine" "vm" {
 
       ipv4_gateway    = "${var.virtual_machine_gateway}"
       dns_suffix_list = ["${var.virtual_machine_domain}"]
-      dns_server_list = ["192.168.1.56", "1.1.1.1"]
+      dns_server_list = ["192.168.1.86", "1.1.1.1"]
     }
   }
 }
