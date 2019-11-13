@@ -36,7 +36,7 @@ resource "vsphere_virtual_machine" "vm" {
     customize {
 
       linux_options {
-        host_name = "${var.virtual_machine_name_prefix}${count.index}"
+        host_name = "${var.virtual_machine_name_prefix}${count.index+1}"
         domain    = "${var.virtual_machine_domain}"
       }
 
