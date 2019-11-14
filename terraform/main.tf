@@ -8,13 +8,13 @@ provider "vsphere" {
 }
 
 resource "vsphere_virtual_machine" "vm" {
-  count            = "3"
+  count            = "4"
   name             = "${var.virtual_machine_name_prefix}${count.index+1}"
   resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
   num_cpus = 2
-  memory   = 2048
+  memory   = 4096
   guest_id = "${data.vsphere_virtual_machine.template.guest_id}"
 
   network_interface {
@@ -24,6 +24,13 @@ resource "vsphere_virtual_machine" "vm" {
   disk {
     label = "disk0"
     size  = 64
+  }
+
+  disk {
+    label = "disk1"
+    size  = 300
+    thin_provisioned = true
+    unit_number = 1
   }
 
   cdrom {
