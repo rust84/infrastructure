@@ -13,7 +13,7 @@ resource "vsphere_virtual_machine" "vm" {
   resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
-  num_cpus = 2
+  num_cpus = 4
   memory   = 4096
   guest_id = "${data.vsphere_virtual_machine.template.guest_id}"
 
