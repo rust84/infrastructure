@@ -1,5 +1,8 @@
 #!/bin/sh -eux
 
+apt-get update
+apt-get upgrade -y
+
 #Fix for guest customization missing http_directory https://kb.vmware.com/s/article/2051469
 ln -s /etc/dhcp /etc/dhcp3
 

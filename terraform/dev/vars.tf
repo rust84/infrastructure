@@ -11,7 +11,7 @@ variable "vsphere_server" {
 }
 
 variable "template_name" {
-  default = "ubuntu-18.04-amd64"
+  default = "ubuntu-19.10-amd64"
 }
 
 variable "virtual_machine_name_prefix" {

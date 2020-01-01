@@ -71,8 +71,7 @@
         "override": {
             "vmware-iso": {
                 "scripts": [
-                    "script/base.sh",
-                    "script/cleanup.sh"
+                    "script/base.sh"
                 ]
             }
         }

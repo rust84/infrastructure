@@ -3,12 +3,12 @@ data "vsphere_datacenter" "dc" {
 }
 
 data "vsphere_datastore" "datastore" {
-  name          = "ssd"
+  name          = "nvme"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
 data "vsphere_datastore" "iso_datastore" {
-  name          = "nvme"
+  name          = "iSCSI-LUN1"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
