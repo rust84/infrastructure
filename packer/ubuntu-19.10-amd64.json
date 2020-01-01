@@ -1,0 +1,119 @@
+{
+"builders": [
+  {
+    "remote_type": "esx5",
+    "remote_host": "{{user `esxi_host`}}",
+    "remote_datastore": "{{user `esxi_datastore`}}",
+    "remote_username": "{{user `esxi_username`}}",
+    "remote_password": "{{user `esxi_password`}}",
+    "vnc_disable_password": true,
+    "keep_registered": true,
+    "boot_command": [
+      "<esc><wait>",
+      "<esc><wait>",
+      "<enter><wait>",
+      "/install/vmlinuz<wait>",
+      " auto<wait>",
+      " console-setup/ask_detect=false<wait>",
+      " console-setup/layoutcode=us<wait>",
+      " console-setup/modelcode=pc105<wait>",
+      " debconf/frontend=noninteractive<wait>",
+      " debian-installer=en_US.UTF-8<wait>",
+      " fb=false<wait>",
+      " initrd=/install/initrd.gz<wait>",
+      " kbd-chooser/method=us<wait>",
+      " keyboard-configuration/layout=USA<wait>",
+      " keyboard-configuration/variant=USA<wait>",
+      " locale=en_US.UTF-8<wait>",
+      " netcfg/get_domain=vm<wait>",
+      " netcfg/get_hostname=vagrant<wait>",
+      " grub-installer/bootdev=/dev/sda<wait>",
+      " noapic<wait>",
+      " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `preseed_path`}}<wait>",
+      " -- <wait>",
+      "<enter><wait>"
+    ],
+    "boot_wait": "10s",
+    "disk_size": "{{user `disk_size`}}",
+    "guest_os_type": "ubuntu-64",
+    "headless": "{{ user `headless` }}",
+    "http_directory": "{{template_dir}}/http",
+    "iso_checksum": "{{user `iso_checksum`}}",
+    "iso_checksum_type": "{{user `iso_checksum_type`}}",
+    "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
+    "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-vmware",
+    "shutdown_command": "echo 'ubuntu' | sudo -S shutdown -P now",
+    "ssh_password": "ubuntu",
+    "ssh_port": 22,
+    "ssh_username": "ubuntu",
+    "disk_type_id": "thin",
+    "ssh_wait_timeout": "10000s",
+    "tools_upload_flavor": "linux",
+    "type": "vmware-iso",
+    "vm_name": "{{ user `template` }}",
+    "memory": "{{ user `memory` }}",
+    "cpus": "{{ user `cpus` }}",
+    "floppy_files": [
+      "preseed/ubuntu.cfg"
+    ],
+    "vmx_data": {
+      "cpuid.coresPerSocket": "1",
+      "ethernet0.pciSlotNumber": "32",
+      "ethernet0.networkName": "VM Network"
+    },
+    "vmx_remove_ethernet_interfaces": true
+  }
+],
+"provisioners": [
+    {
+        "type": "shell",
+        "execute_command": "echo 'ubuntu' | sudo -S -E sh '{{.Path}}'",
+        "override": {
+            "vmware-iso": {
+                "scripts": [
+                    "script/base.sh",
+                    "script/cleanup.sh"
+                ]
+            }
+        }
+    }
+],
+"post-processors": [
+    [
+      {
+        "type": "vsphere-template",
+        "only": [ "vmware-iso" ],
+        "insecure": true,
+        "datacenter": "HomeLab",
+        "host": "vcenter67.our.house",
+        "username": "{{ user `vsphere_user` }}",
+        "password": "{{ user `vsphere_password` }}"
+      }
+    ]
+  ],
+"variables": {
+    "box_basename": "ubuntu-19.10",
+    "build_directory": "../../builds",
+    "build_timestamp": "{{isotime \"20060102150405\"}}",
+    "cpus": "1",
+    "disk_size": "65536",
+    "git_revision": "__unknown_git_revision__",
+    "headless": "",
+    "http_proxy": "{{env `http_proxy`}}",
+    "https_proxy": "{{env `https_proxy`}}",
+    "hyperv_generation": "2",
+    "hyperv_switch": "{{env `hyperv_switch`}}",
+    "guest_additions_url": "",
+    "iso_checksum": "921fd8b271c04aa86a321cc35b40e677f9b85f7903bf2204efb2389b0f0a64c1",
+    "iso_checksum_type": "sha256",
+    "iso_name": "ubuntu-19.10-server-amd64.iso",
+    "memory": "1024",
+    "mirror": "http://cdimage.ubuntu.com",
+    "mirror_directory": "ubuntu/releases/19.10.1/release",
+    "name": "ubuntu-19.10",
+    "no_proxy": "{{env `no_proxy`}}",
+    "preseed_path": "preseed.cfg",
+    "template": "ubuntu-19.10-amd64",
+    "version": "TIMESTAMP"
+  }
+}
