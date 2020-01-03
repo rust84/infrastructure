@@ -11,11 +11,11 @@ variable "vsphere_server" {
 }
 
 variable "template_name" {
-  default = "ubuntu-18.04-amd64"
+  default = "ubuntu-19.10-amd64"
 }
 
 variable "virtual_machine_name_prefix" {
-  default = "k3s-node-"
+  default = "k3s-"
 }
 
 variable "virtual_machine_domain" {
@@ -28,7 +28,7 @@ variable "virtual_machine_network_address" {
 }
 
 variable "virtual_machine_ip_address_start" {
-  default = "101"
+  default = "100"
 }
 
 // The default gateway for the network the virtual machines reside in.

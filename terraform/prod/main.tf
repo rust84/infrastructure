@@ -8,13 +8,13 @@ provider "vsphere" {
 }
 
 resource "vsphere_virtual_machine" "vm" {
-  count            = "4"
-  name             = "${var.virtual_machine_name_prefix}${count.index+1}"
-  resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
+  count            = "3"
+  name             = "${var.virtual_machine_name_prefix}${count.index}"
+  resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
   num_cpus = 4
-  memory   = 4096
+  memory   = 8192
   guest_id = "${data.vsphere_virtual_machine.template.guest_id}"
 
   network_interface {
@@ -43,7 +43,7 @@ resource "vsphere_virtual_machine" "vm" {
     customize {
 
       linux_options {
-        host_name = "${var.virtual_machine_name_prefix}${count.index+1}"
+        host_name = "${var.virtual_machine_name_prefix}${count.index}"
         domain    = "${var.virtual_machine_domain}"
       }
 

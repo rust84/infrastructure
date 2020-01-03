@@ -28,7 +28,7 @@ variable "virtual_machine_network_address" {
 }
 
 variable "virtual_machine_ip_address_start" {
-  default = "110"
+  default = "101"
 }
 
 // The default gateway for the network the virtual machines reside in.
