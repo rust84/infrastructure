@@ -13,8 +13,8 @@ resource "vsphere_virtual_machine" "vm" {
   resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
-  num_cpus = 2
-  memory   = 4096
+  num_cpus = 1
+  memory   = 1024
   guest_id = "${data.vsphere_virtual_machine.template.guest_id}"
 
   network_interface {

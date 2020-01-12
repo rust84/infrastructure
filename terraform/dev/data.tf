@@ -13,7 +13,7 @@ data "vsphere_datastore" "iso_datastore" {
 }
 
 data "vsphere_network" "network" {
-  name          = "VM Network 20"
+  name          = "VM Network"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
