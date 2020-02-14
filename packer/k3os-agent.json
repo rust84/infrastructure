@@ -1,0 +1,87 @@
+{
+  "builders": [{
+    "type": "vmware-iso",
+    "remote_type": "esx5",
+    "remote_host": "{{user `esxi_host`}}",
+    "remote_datastore": "{{user `esxi_datastore`}}",
+    "remote_username": "{{user `esxi_username`}}",
+    "remote_password": "{{user `esxi_password`}}",
+    "vnc_disable_password": true,
+    "keep_registered": true,
+
+    "guest_os_type": "other",
+    "memory": "{{ user `memory` }}",
+    "cpus": "{{ user `cpus` }}",
+
+    "disk_size": 10240,
+    "disk_type_id": "thin",
+
+    "vmx_data": {
+      "cpuid.coresPerSocket": "1",
+      "ethernet0.pciSlotNumber": "32",
+      "ethernet0.networkName": "VM Network 20"
+    },
+    "vmx_remove_ethernet_interfaces": true,
+
+    "iso_checksum_url": "{{ user `checksum` }}",
+    "iso_checksum_type": "file",
+    "iso_url": "{{ user `iso` }}",
+    "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-vmware",
+    "ssh_username": "{{user `ssh_username`}}",
+    "ssh_private_key_file": "{{user `ssh_privkey`}}",
+    "boot_wait": "50s",
+    "boot_command": [
+      "<esc><wait>",
+      "<esc><wait>",
+      "<enter><wait>",
+      "rancher",
+      "<enter>",
+      "sudo k3os install",
+      "<enter>",
+      "1",
+      "<enter>",
+      "N",
+      "<enter>",
+      "Y",
+      "<enter>",
+      "{{user `github_user`}}",
+      "<enter>",
+      "N",
+      "<enter>",
+      "2",
+      "<enter>",
+      "{{user `server_url`}}",
+      "<enter>",
+      "{{user `server_token`}}",
+      "<enter>",
+      "Y",
+      "<enter>"
+    ],
+    "shutdown_command": "sudo poweroff"
+  }],
+  "provisioners":[
+    {
+      "type": "file",
+      "source": "config.yaml",
+      "destination": "/tmp/config.yaml"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'rancher' | sudo -S bash {{.Path}}",
+      "inline": ["cp /tmp/config.yaml /var/lib/rancher/k3os/config.yaml"]
+    }
+  ],
+  "post-processors": [
+      [
+        {
+          "type": "vsphere-template",
+          "only": [ "vmware-iso" ],
+          "insecure": true,
+          "datacenter": "{{ user `vsphere_datacenter` }}",
+          "host": "{{ user `vsphere_host` }}",
+          "username": "{{ user `vsphere_user` }}",
+          "password": "{{ user `vsphere_password` }}"
+        }
+      ]
+    ]
+}

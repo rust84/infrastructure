@@ -2,6 +2,6 @@
 .terraform
 *.tfstate
 *.backup
-variables.json
+*variables.json
 packer_cache/
 *.lock.info

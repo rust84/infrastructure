@@ -17,6 +17,11 @@ data "vsphere_virtual_machine" "template" {
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
+data "vsphere_virtual_machine" "k3os" {
+  name          = "packer-vmware-iso"
+  datacenter_id = "${data.vsphere_datacenter.dc.id}"
+}
+
 data "vsphere_compute_cluster" "cluster" {
   name          = "LAB"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
