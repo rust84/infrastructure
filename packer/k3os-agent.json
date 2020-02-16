@@ -1,6 +1,7 @@
 {
   "builders": [{
     "type": "vmware-iso",
+    "vm_name": "{{ user `template` }}",
     "remote_type": "esx5",
     "remote_host": "{{user `esxi_host`}}",
     "remote_datastore": "{{user `esxi_datastore`}}",
@@ -13,7 +14,7 @@
     "memory": "{{ user `memory` }}",
     "cpus": "{{ user `cpus` }}",
 
-    "disk_size": 10240,
+    "disk_size": "{{user `disk_size`}}",
     "disk_type_id": "thin",
 
     "vmx_data": {

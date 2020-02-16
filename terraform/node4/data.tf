@@ -22,6 +22,11 @@ data "vsphere_virtual_machine" "k3os" {
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
+data "vsphere_virtual_machine" "k3os-3" {
+  name          = "k3s-3-template"
+  datacenter_id = "${data.vsphere_datacenter.dc.id}"
+}
+
 data "vsphere_compute_cluster" "cluster" {
   name          = "LAB"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
