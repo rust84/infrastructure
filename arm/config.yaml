@@ -22,7 +22,9 @@ k3os:
   k3s_args:
   - agent
   # - "--disable-agent"
-hostname: k3s-3
+  taints:
+  - "arm=true:NoExecute"
+hostname: pi4-b
 write_files:
 - enconding: ""
   content: |-
@@ -36,7 +38,7 @@ write_files:
     ETH0=$(connmanctl services | awk '{ print $3 }' | while read -r s1; do connmanctl services $s1 | grep -q "eth0" && echo "$s1"; done)
     write_log "eth0 is bound to: ${ETH0}"
     write_log "Setting up manual net config..."
-    connmanctl config $ETH0 --ipv4 manual 10.20.0.103 255.255.255.0 10.20.0.1 --nameservers 192.168.1.86 1.1.1.1
+    connmanctl config $ETH0 --ipv4 manual 10.20.0.106 255.255.255.0 10.20.0.1 --nameservers 192.168.1.86 1.1.1.1
     connmanctl config $ETH0 --domains our.house
     connmanctl config $ETH0 --timeservers 0.uk.pool.ntp.org 1.uk.pool.ntp.org 2.uk.pool.ntp.org 3.uk.pool.ntp.org
     connmanctl config $ETH0 --ipv6 off
