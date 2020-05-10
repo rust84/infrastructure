@@ -22,8 +22,23 @@ data "vsphere_virtual_machine" "k3os" {
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
-data "vsphere_virtual_machine" "k3os-3" {
-  name          = "k3s-3-template"
+data "vsphere_virtual_machine" "k3os-a" {
+  name          = "k3os-a-template"
+  datacenter_id = "${data.vsphere_datacenter.dc.id}"
+}
+
+data "vsphere_virtual_machine" "k3os-b" {
+  name          = "k3os-b-template"
+  datacenter_id = "${data.vsphere_datacenter.dc.id}"
+}
+
+data "vsphere_virtual_machine" "k3os-c" {
+  name          = "k3os-c-template"
+  datacenter_id = "${data.vsphere_datacenter.dc.id}"
+}
+
+data "vsphere_virtual_machine" "k3os-d" {
+  name          = "k3os-d-template"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 

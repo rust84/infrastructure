@@ -15,7 +15,7 @@ variable "template_name" {
 }
 
 variable "virtual_machine_name_prefix" {
-  default = "k3s-"
+  default = "k3os"
 }
 
 variable "virtual_machine_domain" {
