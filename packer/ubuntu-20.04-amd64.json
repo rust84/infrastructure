@@ -20,6 +20,7 @@
         "-- <enter>"
       ],
       "disk_size": "{{ user `disk_size` }}",
+      "disk_type_id": 0,
       "floppy_files": [
         "preseed/{{ user `preseed` }}"
       ],
