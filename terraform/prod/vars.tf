@@ -1,17 +1,17 @@
 variable "vsphere_user" {
-  type = "string"
+  type = string
 }
 
 variable "vsphere_password" {
-  type = "string"
+  type = string
 }
 
 variable "vsphere_server" {
-  type = "string"
+  type = string
 }
 
 variable "template_name" {
-  default = "ubuntu-19.10-amd64"
+  default = "ubuntu2004"
 }
 
 variable "virtual_machine_name_prefix" {
@@ -19,12 +19,12 @@ variable "virtual_machine_name_prefix" {
 }
 
 variable "virtual_machine_domain" {
-  type = "string"
+  type = string
 }
 
 // The network address for the virtual machines, in the form of 10.0.0.0/24.
 variable "virtual_machine_network_address" {
-  type = "string"
+  type = string
 }
 
 variable "virtual_machine_ip_address_start" {
@@ -33,7 +33,7 @@ variable "virtual_machine_ip_address_start" {
 
 // The default gateway for the network the virtual machines reside in.
 variable "virtual_machine_gateway" {
-  type = "string"
+  type = string
 }
 
 // Currently there seems to be a bug with reading the DNS servers var

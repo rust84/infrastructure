@@ -1,0 +1,118 @@
+{
+  "_comment": "Build with `packer build -only=vmware-iso -var-file='variables.json' ubuntu-20.04-amd64.json`",
+  "builders": [
+    {
+      "boot_command": [
+        "{{ user `boot_command_prefix` }}",
+        "/install/vmlinuz noapic ",
+        "initrd=/install/initrd.gz ",
+        "file=/floppy/{{ user `preseed` }} ",
+        "debian-installer={{ user `locale` }} auto locale={{ user `locale` }} kbd-chooser/method=us ",
+        "hostname={{ user `hostname` }} ",
+        "grub-installer/bootdev=/dev/sda<wait> ",
+        "fb=false debconf/frontend=noninteractive ",
+        "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+        "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+        "passwd/user-fullname={{ user `ssh_fullname` }} ",
+        "passwd/user-password={{ user `ssh_password` }} ",
+        "passwd/user-password-again={{ user `ssh_password` }} ",
+        "passwd/username={{ user `ssh_username` }} ",
+        "-- <enter>"
+      ],
+      "disk_size": "{{ user `disk_size` }}",
+      "floppy_files": [
+        "preseed/{{ user `preseed` }}"
+      ],
+      "guest_os_type": "{{ user `vmware_guest_os_type` }}",
+      "headless": "{{ user `headless` }}",
+      "http_directory": "http",
+      "iso_checksum": "{{ user `iso_checksum` }}",      
+      "iso_urls": [
+        "{{ user `iso_path` }}/{{ user `iso_name` }}",
+        "{{ user `iso_url` }}"
+      ],
+      "output_directory": "output-{{ user `vm_name` }}-vmware-iso",
+      "shutdown_command": "echo '{{ user `ssh_password` }}'|sudo -S shutdown -P now",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_timeout": "10000s",
+      "tools_upload_flavor": "linux",
+      "type": "vmware-iso",
+      "vm_name": "{{ user `vm_name` }}",
+      "vmx_data": {
+        "ethernet0.pciSlotNumber": "32",
+        "memsize": "{{ user `memory` }}",
+        "numvcpus": "{{ user `cpus` }}"
+      },
+      "vmx_remove_ethernet_interfaces": true
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "vsphere",
+        "keep_input_artifact": true,
+        "vm_name": "ubuntu2004",
+        "vm_network": "VM Network",
+        "cluster": "LAB",
+        "datacenter": "HomeLab",
+        "datastore": "iSCSI-LUN1",
+        "host": "vcenter67.our.house",
+        "password": "{{ user `vsphere_password` }}",
+        "username": "{{ user `vsphere_user` }}"
+      },
+      {
+        "type": "vsphere-template",
+        "only": [ "vmware-iso" ],
+        "insecure": true,
+        "datacenter": "HomeLab",
+        "host": "vcenter67.our.house",
+        "username": "{{ user `vsphere_user` }}",
+        "password": "{{ user `vsphere_password` }}"
+      }
+    ]
+  ],
+  "provisioners": [
+    {
+      "execute_command": "echo '{{ user `ssh_password` }}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+      "scripts": [
+        "script/base.sh"
+      ],
+      "type": "shell",
+      "expect_disconnect": "true"
+    }
+  ],
+  "variables": {
+    "boot_command_prefix": "<esc><esc><enter><wait>",
+    "cleanup_pause": "",
+    "cpus": "1",
+    "custom_script": "custom-script.sh",
+    "desktop": "false",
+    "disk_size": "65536",
+    "ftp_proxy": "{{env `ftp_proxy`}}",
+    "headless": "false",
+    "http_proxy": "{{env `http_proxy`}}",
+    "https_proxy": "{{env `https_proxy`}}",
+    "install_vagrant_key": "true",
+    "iso_checksum": "sha256:a5b0ea5918f850124f3d72ef4b85bda82f0fcd02ec721be19c1a6952791c8ee8",    
+    "iso_name": "ubuntu-18.04.1-server-amd64.iso",
+    "iso_path": "/Volumes/Storage/software/ubuntu",
+    "iso_url": "http://cdimage.ubuntu.com/ubuntu/releases/18.04/release/ubuntu-18.04.1-server-amd64.iso",
+    "locale": "en_US",
+    "memory": "512",
+    "no_proxy": "{{env `no_proxy`}}",
+    "parallels_guest_os_type": "ubuntu",
+    "preseed" : "ubuntu.cfg",
+    "rsync_proxy": "{{env `rsync_proxy`}}",
+    "hostname": "ubuntu",
+    "ssh_fullname": "ubuntu",
+    "ssh_password": "ubuntu",
+    "ssh_username": "ubuntu",
+    "update": "false",
+    "vagrantfile_template": "",
+    "version": "0.1.0",
+    "virtualbox_guest_os_type": "Ubuntu_64",
+    "vm_name": "ubuntu1804",
+    "vmware_guest_os_type": "ubuntu-64"
+  }
+}
