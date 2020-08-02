@@ -2,8 +2,23 @@ data "vsphere_datacenter" "dc" {
   name = "HomeLab"
 }
 
-data "vsphere_datastore" "datastore" {
+data "vsphere_datastore" "iscsi" {
   name          = "iSCSI-LUN1"
+  datacenter_id = "${data.vsphere_datacenter.dc.id}"
+}
+
+data "vsphere_datastore" "ssd" {
+  name          = "ssd"
+  datacenter_id = "${data.vsphere_datacenter.dc.id}"
+}
+
+data "vsphere_datastore" "nvme" {
+  name          = "nvme"
+  datacenter_id = "${data.vsphere_datacenter.dc.id}"
+}
+
+data "vsphere_datastore" "nvme2" {
+  name          = "nvme2"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
