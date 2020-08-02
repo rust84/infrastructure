@@ -93,7 +93,7 @@ resource "vsphere_virtual_machine" "node_b" {
     customize {
 
       linux_options {
-        host_name = "${var.virtual_machine_name_prefix}a"
+        host_name = "${var.virtual_machine_name_prefix}b"
         domain    = var.virtual_machine_domain
       }
 
@@ -147,7 +147,7 @@ resource "vsphere_virtual_machine" "node_c" {
     customize {
 
       linux_options {
-        host_name = "${var.virtual_machine_name_prefix}a"
+        host_name = "${var.virtual_machine_name_prefix}c"
         domain    = var.virtual_machine_domain
       }
 
@@ -201,7 +201,7 @@ resource "vsphere_virtual_machine" "node_d" {
     customize {
 
       linux_options {
-        host_name = "${var.virtual_machine_name_prefix}a"
+        host_name = "${var.virtual_machine_name_prefix}d"
         domain    = var.virtual_machine_domain
       }
 
