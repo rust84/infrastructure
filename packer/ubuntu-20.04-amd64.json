@@ -20,7 +20,7 @@
         "-- <enter>"
       ],
       "disk_size": "{{ user `disk_size` }}",
-      "disk_type_id": 0,
+      "disk_type_id": 1,
       "floppy_files": [
         "preseed/{{ user `preseed` }}"
       ],
@@ -60,7 +60,8 @@
         "datastore": "iSCSI-LUN1",
         "host": "vcenter67.our.house",
         "password": "{{ user `vsphere_password` }}",
-        "username": "{{ user `vsphere_user` }}"
+        "username": "{{ user `vsphere_user` }}",
+        "disk_mode": "thin"
       },
       {
         "type": "vsphere-template",
