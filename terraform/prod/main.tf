@@ -18,6 +18,7 @@ resource "vsphere_virtual_machine" "master_a" {
   num_cpus = 4
   memory   = 8192
   guest_id = data.vsphere_virtual_machine.template.guest_id
+  enable_disk_uuid = true
 
   network_interface {
     network_id = data.vsphere_network.network.id
@@ -66,6 +67,7 @@ resource "vsphere_virtual_machine" "node_b" {
   num_cpus = 4
   memory   = 8192
   guest_id = data.vsphere_virtual_machine.template.guest_id
+  enable_disk_uuid = true
 
   network_interface {
     network_id = data.vsphere_network.network.id
@@ -120,6 +122,7 @@ resource "vsphere_virtual_machine" "node_c" {
   num_cpus = 4
   memory   = 8192
   guest_id = data.vsphere_virtual_machine.template.guest_id
+  enable_disk_uuid = true
 
   network_interface {
     network_id = data.vsphere_network.network.id
@@ -173,7 +176,9 @@ resource "vsphere_virtual_machine" "node_d" {
 
   num_cpus = 4
   memory   = 16384
+  memory_reservation = 16384
   guest_id = data.vsphere_virtual_machine.template.guest_id
+  enable_disk_uuid = true
 
   network_interface {
     network_id = data.vsphere_network.network.id
