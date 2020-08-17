@@ -1,13 +1,14 @@
 [k3s_master]
-#10.20.0.100 hostname=k3s-0.our.house
+10.20.0.100 hostname=k3s-a
 
 [k3s_worker]
-#10.20.0.101 hostname=k3s-1.our.house
-#10.20.0.102 hostname=k3s-2.our.house
+10.20.0.101 hostname=k3s-b
+10.20.0.102 hostname=k3s-c
+10.20.0.103 hostname=k3s-d
 
-10.20.0.105 hostname=pi4-a.our.house
-10.20.0.106 hostname=pi4-b.our.house
-10.20.0.107 hostname=pi4-c.our.house
+#10.20.0.105 hostname=pi4-a
+#10.20.0.106 hostname=pi4-b
+#10.20.0.107 hostname=pi4-c
 
 [k3s_cluster:children]
 k3s_master

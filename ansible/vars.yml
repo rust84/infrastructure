@@ -4,3 +4,7 @@ ansible_user: ubuntu
 
 log2ram_version: v1.4
 log2ram_size: 128M
+
+private_registry:
+  enabled: true
+  url: 192.168.1.56:8082 

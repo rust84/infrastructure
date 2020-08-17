@@ -244,3 +244,18 @@
       over_voltage=2
       arm_freq=1750
   when: deploy_target != 'vagrant'
+
+  # Set up k3s to use private http registry, for pull-through caching
+- name: Create k3s if it does not exist
+  file:
+    path: /etc/rancher/k3s
+    state: directory
+    mode: '0755'
+  tags: registry
+
+- name: Set up k3s to use private http registry
+  template:
+    src: registries.yaml.j2
+    dest: /etc/rancher/k3s/registries.yaml
+  when: private_registry.enabled is defined and private_registry.enabled == true
+  tags: registry
