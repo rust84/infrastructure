@@ -7,4 +7,4 @@ log2ram_size: 128M
 
 private_registry:
   enabled: true
-  url: 192.168.1.56:8082 
+  url: 10.20.0.51:8082 
