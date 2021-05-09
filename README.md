@@ -1,10 +1,20 @@
-# infrastructure
-terraform for vmware infrastructure
+## Create Proxmox template
 
-# build vm template
+Create a template from the Ubuntu cloud-init image.
 
-packer build -var-file='variables.json' .\ubuntu-18.04-amd64.json
+```
+qm create 9200 --name focal-server-cloudimg-amd64 --memory 4096 --cpu cputype=host --cores 4 --serial0 socket --vga serial0 --net0 virtio,bridge=vmbr0 --agent enabled=1,fstrim_cloned_disks=1
+qm importdisk 9200 /var/lib/vz/template/iso/focal-server-cloudimg-amd64.img local-lvm -format qcow2
+qm set 9200 --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-9200-disk-0,ssd=1,discard=on
+qm template 9200
+```
 
-# deploy
+Clone the template and attach the seed iso cdrom.
 
-terraform apply
+```
+qm clone 9200 402 --name k3s-e --format raw --full --storage local-lvm
+qm resize 402 scsi0 64G
+qm set 402 --boot c --bootdisk scsi0
+qm set 402 -cdrom /var/lib/vz/template/iso/k3s-seed-k3s-e.iso
+(cluster) qm migrate 402 proxmox-c --with-local-disks --online
+```
