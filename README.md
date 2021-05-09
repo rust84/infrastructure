@@ -9,6 +9,12 @@ qm set 9200 --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-9200-disk-0,ssd=1,disc
 qm template 9200
 ```
 
+## Generate seed ISOs
+
+Run `create-k3s-seed-iso.sh $node` to generate a seed iso from the cloud-init file which will be attached as a cdrom device at boot.
+
+## Create the node
+
 Clone the template and attach the seed iso cdrom.
 
 ```
