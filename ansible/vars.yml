@@ -2,9 +2,9 @@
 
 ansible_user: ubuntu
 
-log2ram_version: v1.4
+log2ram_version: 1.6.0
 log2ram_size: 128M
 
 private_registry:
   enabled: true
-  url: 10.20.0.51:8082 
+  url: 10.20.0.51:8082

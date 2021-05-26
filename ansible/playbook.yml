@@ -13,14 +13,14 @@
   tasks:
     - include_role:
         name: system
-      tags: ['system']
-    - include_role:
-        name: user
-      tags: ['user']
-    - include_role:
-        name: userland
-      when: deploy_target != 'vagrant'
-      tags: ['userland']
+      tags: ['system','unattended_upgrades','registry']
+    # - include_role:
+    #     name: user
+    #   tags: ['user']
+    # - include_role:
+    #     name: userland
+    #   when: deploy_target != 'vagrant'
+    #   tags: ['userland']
     - name: Reboot host and wait for it to restart
       reboot:
         msg: "Reboot initiated by Ansible"

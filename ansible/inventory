@@ -3,12 +3,11 @@
 
 [k3s_worker]
 10.20.0.101 hostname=k3s-b
-10.20.0.102 hostname=k3s-c
 10.20.0.103 hostname=k3s-d
-
-#10.20.0.105 hostname=pi4-a
-#10.20.0.106 hostname=pi4-b
-#10.20.0.107 hostname=pi4-c
+10.20.0.108 hostname=k3s-e
+10.20.0.105 hostname=pi4-a
+10.20.0.106 hostname=pi4-b
+10.20.0.107 hostname=pi4-c
 
 [k3s_cluster:children]
 k3s_master
