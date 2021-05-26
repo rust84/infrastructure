@@ -1,0 +1,42 @@
+#cloud-config
+
+hostname: pi4-b
+
+chpasswd:
+  expire: false
+  list:
+  - ubuntu:$PASSWORD
+
+# Enable password authentication with the SSH daemon
+ssh_pwauth: false
+
+ssh_import_id:
+- gh:rust84
+
+ssh_authorized_keys:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIInP9GAskxelbmEOiLDiYfpDQcXUvvoQEjphI7JEhQ6J
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDPCU4yDFXdvqV3+ueYvLjqFw9r77m6/IWbldnPthrdhwokDz/jKUqaNQz1QHIBltKU3dLMzBe/HJTWxtNTtUWFM4Ci5C8JrMGNabhiXmz0VtMxuys8jO5FlxH7wGL1dZ389QJjqP6YnMdi7JizOqepHSiuz9yWfWK3NYpBL1C4GimO9gYl4Y6UU2P+6w4hXZ0OI7+BN9poBQdPjgARwALFilmex36XJnXbyfCVkDHTZv/M+/nI+vhV+9D/omvL19N50m/xRkROuoR4qVxXf2lQxtCVZ4kCd3DNeTHIFSv4H7RPXTlB1gNPe5j+74yJ/IU2DaXLiZWqm/qqXBAwA48qfg6dWvMOizMKNh6wCHlqeiXFiScnZ8CZDFYX/Hw5ByVloc2eIDAbOa7VIQBAmUpndTbjWxU7g0GIDuRhj0MWRzymJG/82HAApyWHAIpAxKqFfmlzBwoFgP3LuBk4rBpQQ7nYHsh3qLWVaEkomytHjwvnPgKPfWp3KYRBZvZMeQMX9fvUrbDYZbTV3vkbOVjQ700WjbkCrCD/QX5CiCBXgh+PQQd1RUn9v9Xfgr/C1BPSCWGqRPz9BnDpWsfHvFK5QLVtJ1FUyGHDmhUzEnqZGGGrtiAANHoYIvjaCjccY79oQ5Gp3cW+HprUWy2VNdKOcSZCbY0TuiGGVOya6mTjyQ== cardno:000613375707
+
+## Update apt database and upgrade packages on first boot
+package_update: true
+package_upgrade: true
+
+ntp:
+  enabled: true
+  servers:
+    - 0.uk.pool.ntp.org
+    - 1.uk.pool.ntp.org
+    - 2.uk.pool.ntp.org
+    - 3.uk.pool.ntp.org
+
+packages:
+- curl
+- wget
+- htop
+- nfs-common
+
+runcmd:
+- ln -sfn /run/systemd/resolve/resolv.conf /etc/resolv.conf
+- curl -sfL https://get.k3s.io | K3S_URL=https://k3s-a:6443 K3S_TOKEN=$K3S_TOKEN sh -s - --node-taint arm=true:NoExecute  --node-label "k3s-upgrade=enabled"
+- sync
+- reboot -f

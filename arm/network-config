@@ -1,0 +1,13 @@
+version: 2
+ethernets:
+  eth0:
+    dhcp4: false
+    optional: true
+    addresses:
+      - 10.20.0.107/24
+    gateway4: 10.20.0.1
+    nameservers:
+      search:
+        - our.house
+      addresses:
+        - 10.20.0.1
