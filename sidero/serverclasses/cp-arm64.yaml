@@ -28,10 +28,10 @@ spec:
         name: "custom"
         urls:
           - "https://gist.githubusercontent.com/rust84/e18d0b24f43489792464ee207a1465ae/raw/29ff5874dcad680c8e448d36a724e00b75a206ae/cluster_0_quick_install.yaml"
-    # - op: replace
-    #   path: /cluster/extraManifests
-    #   value:
-    #     - "https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.2.2/deploy/ha-install.yaml"
+    - op: replace
+      path: /cluster/extraManifests
+      value:
+        - "https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.2.2/deploy/ha-install.yaml"
     - op: add
       path: /machine/kubelet/extraArgs
       value:
