@@ -7,3 +7,5 @@ packer_cache/
 *.lock.info
 *.iso
 .env
+*-talosconfig.yaml
+kubeconfig*

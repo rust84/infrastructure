@@ -7,19 +7,19 @@ spec:
   accepted: true
   bmc:
     endpoint: 10.20.0.90
-    pass: xxxxxx
+    pass: supersecret
     user: russell
+  hostname: micro8.our.house
   configPatches:
     - op: replace
       path: /machine/install/disk
       value: /dev/sda
-    # - op: add
-    #   path: /machine/network/hostname
-    #   value: micro8
+    - op: add
+      path: /machine/network/hostname
+      value: micro8.our.house
   cpu:
     manufacturer: Intel
     version: Intel(R) Xeon(R) CPU E3-1265L V2 @ 2.50GHz
-  hostname: 10.20.0.113 #micro8.our.house
   system:
     manufacturer: CZ145101WE
     productName: 712317-421

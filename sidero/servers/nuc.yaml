@@ -5,17 +5,17 @@ metadata:
   name: a63fe352-e482-d8b5-81a3-1c697a00fb0f
 spec:
   accepted: true
+  hostname: nuc3.our.house
   configPatches:
     - op: replace
       path: /machine/install/disk
       value: /dev/sda
-    # - op: add
-    #   path: /machine/network/hostname
-    #   value: nuc3
+    - op: add
+      path: /machine/network/hostname
+      value: nuc3.our.house
   cpu:
     manufacturer: Intel(R) Corporation
     version: Intel(R) Core(TM) i3-8109U CPU @ 3.00GHz
-  hostname: 10.20.0.112 #nuc3.our.house
   pxeBootAlways: true
   system:
     family: Intel NUC

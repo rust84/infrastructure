@@ -10,17 +10,17 @@ spec:
     namespace: default
     name: default-arm64
   accepted: true
+  hostname: pi4-c.our.house
   configPatches:
     - op: replace
       path: /machine/install/disk
       value: /dev/sda
-    # - op: add
-    #   path: /machine/network/hostname
-    #   value: pi4-c
+    - op: add
+      path: /machine/network/hostname
+      value: pi4-c.our.house
   cpu:
     manufacturer: Broadcom
     version: BCM2711 (ARM Cortex-A72)
-  hostname: 10.20.0.115 #pi4-c.our.house
   pxeBootAlways: true
   system:
     family: Raspberry Pi
