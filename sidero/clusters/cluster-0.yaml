@@ -27,7 +27,7 @@ metadata:
   namespace: default
 spec:
   controlPlaneEndpoint:
-    host: 10.20.0.115
+    host: cluster-0.our.house
     port: 6443
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
@@ -52,16 +52,25 @@ spec:
   controlPlaneConfig:
     controlplane:
       generateType: controlplane
-      talosVersion: v0.13.1
+      talosVersion: v0.14.0
     init:
+      configPatches:
+        - op: add
+          path: /machine/network
+          value:
+            interfaces:
+              - interface: eth0
+                dhcp: true
+                vip:
+                  ip: 10.20.0.250
       generateType: init
-      talosVersion: v0.13.1
+      talosVersion: v0.14.0
   infrastructureTemplate:
     apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
     kind: MetalMachineTemplate
     name: cluster-0-cp
   replicas: 1
-  version: v1.21.5
+  version: v1.22.2
 ---
 apiVersion: bootstrap.cluster.x-k8s.io/v1alpha3
 kind: TalosConfigTemplate
@@ -72,7 +81,7 @@ spec:
   template:
     spec:
       generateType: join
-      talosVersion: v0.13.1
+      talosVersion: v0.14.0
 ---
 apiVersion: cluster.x-k8s.io/v1alpha4
 kind: MachineDeployment
@@ -96,7 +105,7 @@ spec:
         apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
         kind: MetalMachineTemplate
         name: cluster-0-workers
-      version: v1.21.5
+      version: v1.22.2
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
 kind: MetalMachineTemplate

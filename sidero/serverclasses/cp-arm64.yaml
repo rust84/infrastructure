@@ -14,13 +14,6 @@ spec:
         disk: /dev/sda
         extraKernelArgs:
           - console=ttyAMA0,115200
-    - op: add
-      path: /machine/network/interfaces
-      value:
-        - interface: eth0
-          dhcp: true
-          vip:
-            ip: 10.20.0.250
     - op: replace
       path: /cluster/proxy/disabled
       value: true
