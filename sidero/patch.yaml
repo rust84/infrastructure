@@ -5,7 +5,7 @@ spec:
         - name: tftp-folder
           emptyDir: {}
       initContainers:
-        - image: ghcr.io/rust84/raspberrypi4-uefi:0.0.8-dirty # <-- change accordingly.
+        - image: ghcr.io/rust84/raspberrypi4-uefi:1.0.0-dirty # <-- change accordingly.
           imagePullPolicy: Always
           name: tftp-folder-setup
           command:
