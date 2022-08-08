@@ -1,13 +1,13 @@
+version: 2
 ethernets:
   eth0:
     dhcp4: false
     optional: true
-version: 2
-ethernets:
-  eth0:
     addresses:
-      - 10.20.0.105/24
+      - 10.20.0.107/24
     gateway4: 10.20.0.1
     nameservers:
-      search: [our.house]
-      addresses: [192.168.1.86]
+      search:
+        - our.house
+      addresses:
+        - 10.20.0.1
